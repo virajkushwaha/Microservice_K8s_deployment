@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-init-script
+  namespace: hotel
+data:
+  init-db.sql: |
+    CREATE DATABASE IF NOT EXISTS auth_service_db;
+    CREATE DATABASE IF NOT EXISTS room_db;
+    CREATE DATABASE IF NOT EXISTS reservation_db;
+    CREATE DATABASE IF NOT EXISTS staff_db;
+    CREATE USER IF NOT EXISTS 'hotel_user'@'%' IDENTIFIED BY 'Hotel_1234';
+    GRANT ALL PRIVILEGES ON auth_service_db.* TO 'hotel_user'@'%';
+    GRANT ALL PRIVILEGES ON room_db.* TO 'hotel_user'@'%';
+    GRANT ALL PRIVILEGES ON reservation_db.* TO 'hotel_user'@'%';
+    GRANT ALL PRIVILEGES ON staff_db.* TO 'hotel_user'@'%';
+    FLUSH PRIVILEGES;
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: hotel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      nodeSelector:
+        role: worker
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: mysql-root-password
+          volumeMounts:
+            - name: init-script
+              mountPath: /docker-entrypoint-initdb.d
+          readinessProbe:
+            exec:
+              command: ["mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            failureThreshold: 10
+      volumes:
+        - name: init-script
+          configMap:
+            name: mysql-init-script
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: hotel
+spec:
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306

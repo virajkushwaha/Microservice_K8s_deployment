@@ -1,0 +1,92 @@
+<!-- <div class="create-user-container">
+    <h2>User Management</h2>
+  
+    <div class="button-group">
+      <button (click)="openModal('add')">Add User</button>
+      <button (click)="openModal('updateUsername')">Update Username</button>
+      <button (click)="openModal('updatePassword')">Update Password</button>
+      <button (click)="openModal('delete')">Delete User</button>
+    </div>
+  
+    <div class="modal" *ngIf="showModal">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+  
+        <form *ngIf="modalType === 'add'" (ngSubmit)="onAddUser()">
+          <h3>Add User</h3>
+          <input type="text" placeholder="Username" [(ngModel)]="formData.username" name="username" required />
+          <input type="email" placeholder="Email" [(ngModel)]="formData.email" name="email" required />
+          <input type="password" placeholder="Password" [(ngModel)]="formData.password" name="password" required />
+          <select [(ngModel)]="formData.role" name="role" required>
+            <option value="MANAGER">Manager</option>
+            <option value="RECEPTIONIST">Receptionist</option>
+          </select>
+          <button type="submit">Add</button>
+        </form>
+  
+        <form *ngIf="modalType === 'updateUsername'" (ngSubmit)="onUpdateUsername()">
+          <h3>Update Username</h3>
+          <input type="text" placeholder="Current Username" [(ngModel)]="formData.username" name="username" required />
+          <input type="text" placeholder="New Username" [(ngModel)]="formData.newUsername" name="newUsername" required />
+          <button type="submit">Update</button>
+        </form>
+  
+        <form *ngIf="modalType === 'updatePassword'" (ngSubmit)="onUpdatePassword()">
+          <h3>Update Password</h3>
+          <input type="text" placeholder="Username" [(ngModel)]="formData.username" name="username" required />
+          <input type="password" placeholder="New Password" [(ngModel)]="formData.newPassword" name="newPassword" required />
+          <button type="submit">Update</button>
+        </form>
+  
+        <form *ngIf="modalType === 'delete'" (ngSubmit)="onDeleteUser()">
+          <h3>Delete User</h3>
+          <input type="text" placeholder="Username" [(ngModel)]="formData.username" name="username" required />
+          <button type="submit">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+   -->
+
+<div class="page-header">
+  <h2>User Management</h2>
+  <p>Create and manage staff accounts</p>
+</div>
+
+<div class="page-content">
+  <div class="button-group">
+    <button class="btn-add" (click)="openModal('add')">
+      <i class="fas fa-user-plus"></i>
+      Add User
+    </button>
+    <button class="btn-delete" (click)="openModal('delete')">
+      <i class="fas fa-user-minus"></i>
+      Delete User
+    </button>
+  </div>
+
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+
+      <form *ngIf="modalType === 'add'" (ngSubmit)="onAddUser()">
+        <h3>Add User</h3>
+        <input type="text" placeholder="Username" [(ngModel)]="formData.username" name="username" required />
+        <input type="email" placeholder="Email" [(ngModel)]="formData.email" name="email" required />
+        <input type="password" placeholder="Password" [(ngModel)]="formData.password" name="password" required />
+        <select [(ngModel)]="formData.role" name="role" required>
+          <option value="MANAGER">Manager</option>
+          <option value="RECEPTIONIST">Receptionist</option>
+        </select>
+        <button type="submit">Add</button>
+      </form>
+
+      <form *ngIf="modalType === 'delete'" (ngSubmit)="onDeleteUser()">
+        <h3>Delete User</h3>
+        <input type="text" placeholder="Username" [(ngModel)]="formData.username" name="username" required />
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+  </div>
+</div>
+  

@@ -1,0 +1,59 @@
+<div class="page-header">
+  <h2>Room Status</h2>
+  <p>View and manage room availability</p>
+</div>
+
+<div class="page-content">
+  <div class="button-group">
+    <button class="btn-view" (click)="getAllRooms()">
+      <i class="fas fa-list"></i>
+      View All Rooms
+    </button>
+    <button class="btn-search" (click)="openModal('getByRoomNumber')">
+      <i class="fas fa-search"></i>
+      Find Room
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+
+      <!-- Get Room by Number -->
+      <form *ngIf="modalType === 'getByRoomNumber'" (ngSubmit)="onGetRoomByNumber()">
+        <h3>Find Room</h3>
+        <input type="text" placeholder="Room Number" [(ngModel)]="roomNumber" name="roomNumber" required />
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Room List -->
+  <div *ngIf="roomList.length > 0" class="room-list">
+    <div class="list-header">
+      <h3><i class="fas fa-bed"></i> All Rooms ({{ roomList.length }})</h3>
+    </div>
+    <div class="list-content">
+      <ul>
+        <li *ngFor="let room of roomList">
+          {{ room.id }} - {{ room.roomNumber }} ({{ room.roomType }}) - ₹{{ room.ratePerNight }} - {{ room.status }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Room Details -->
+  <div *ngIf="roomDetails" class="room-details">
+    <div class="details-header">
+      <h3><i class="fas fa-info-circle"></i> Room Details</h3>
+    </div>
+    <div class="details-content">
+      <p><strong>Room Number:</strong> {{ roomDetails.roomNumber }}</p>
+      <p><strong>Type:</strong> {{ roomDetails.roomType }}</p>
+      <p><strong>Status:</strong> {{ roomDetails.status }}</p>
+      <p><strong>Rate:</strong> ₹{{ roomDetails.ratePerNight }}</p>
+      <p><strong>Capacity:</strong> {{ roomDetails.capacity }}</p>
+    </div>
+  </div>
+</div>

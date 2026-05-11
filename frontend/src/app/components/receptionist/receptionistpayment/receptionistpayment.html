@@ -1,0 +1,116 @@
+<div class="page-header">
+  <h2>Payment Management</h2>
+  <p>Process and manage guest payments</p>
+</div>
+
+<div class="page-content">
+  <div class="button-group">
+    <button class="btn-add" (click)="openModal('add')">
+      <i class="fas fa-plus"></i>
+      Add Payment
+    </button>
+    <button class="btn-view" (click)="getAllPayments()">
+      <i class="fas fa-list"></i>
+      View All Payments
+    </button>
+    <button class="btn-search" (click)="openModal('search')">
+      <i class="fas fa-search"></i>
+      Search Payment
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+
+      <!-- Add Payment -->
+      <form *ngIf="modalType === 'add'" (ngSubmit)="onAddPayment()">
+        <h3>Add Payment</h3>
+        <input type="text" placeholder="Reservation Code" [(ngModel)]="paymentForm.reservationCode" name="reservationCode" required />
+        <input type="number" placeholder="Amount" [(ngModel)]="paymentForm.amount" name="amount" required />
+        <select [(ngModel)]="paymentForm.paymentMethod" name="paymentMethod" required>
+          <option value="">Select Payment Method</option>
+          <option value="CASH">Cash</option>
+          <option value="CARD">Card</option>
+          <option value="UPI">UPI</option>
+          <option value="BANK_TRANSFER">Bank Transfer</option>
+        </select>
+        <button type="submit">Add Payment</button>
+      </form>
+
+      <!-- Search Payment -->
+      <form *ngIf="modalType === 'search'" (ngSubmit)="onSearchPayment()">
+        <h3>Search Payment</h3>
+        <input type="text" placeholder="Reservation Code" [(ngModel)]="searchCode" name="searchCode" required />
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Payment List -->
+  <div *ngIf="paymentList.length > 0" class="payment-list">
+    <div class="list-header">
+      <h3><i class="fas fa-credit-card"></i> All Payments ({{ paymentList.length }})</h3>
+    </div>
+    <div class="list-content">
+      <div class="payment-grid">
+        <div *ngFor="let payment of paymentList" class="payment-card">
+          <div class="card-header">
+            <span class="payment-id">#{{ payment.id }}</span>
+            <span class="status-badge success">{{ payment.paymentMethod }}</span>
+          </div>
+          <div class="card-body">
+            <div class="payment-info">
+              <h4><i class="fas fa-receipt"></i> ₹{{ payment.amount }}</h4>
+              <p class="reservation-code">Reservation: {{ payment.reservationCode }}</p>
+            </div>
+            <div class="payment-details">
+              <div class="detail-item">
+                <i class="fas fa-calendar"></i>
+                <span>{{ formatDate(payment.paymentDate) }}</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-credit-card"></i>
+                <span>{{ payment.paymentMethod }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Results -->
+  <div *ngIf="searchResults.length > 0" class="search-results">
+    <div class="list-header">
+      <h3><i class="fas fa-search"></i> Search Results ({{ searchResults.length }})</h3>
+    </div>
+    <div class="list-content">
+      <div class="payment-grid">
+        <div *ngFor="let payment of searchResults" class="payment-card">
+          <div class="card-header">
+            <span class="payment-id">#{{ payment.id }}</span>
+            <span class="status-badge success">{{ payment.paymentMethod }}</span>
+          </div>
+          <div class="card-body">
+            <div class="payment-info">
+              <h4><i class="fas fa-receipt"></i> ₹{{ payment.amount }}</h4>
+              <p class="reservation-code">Reservation: {{ payment.reservationCode }}</p>
+            </div>
+            <div class="payment-details">
+              <div class="detail-item">
+                <i class="fas fa-calendar"></i>
+                <span>{{ formatDate(payment.paymentDate) }}</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-credit-card"></i>
+                <span>{{ payment.paymentMethod }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="page-header">
+  <h2>User Management</h2>
+  <p>Create and manage staff accounts</p>
+</div>
+
+<div class="page-content">
+  <div class="button-group">
+    <button class="btn-add" (click)="openModal('add')">
+      <i class="fas fa-user-plus"></i>
+      Add User
+    </button>
+    <button class="btn-delete" (click)="openModal('delete')">
+      <i class="fas fa-user-minus"></i>
+      Delete User
+    </button>
+  </div>
+
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+
+      <form *ngIf="modalType === 'add'" (ngSubmit)="onAddUser()">
+        <h3>Add User</h3>
+        <input type="text" placeholder="Username" [(ngModel)]="formData.username" name="username" required />
+        <input type="email" placeholder="Email" [(ngModel)]="formData.email" name="email" required />
+        <input type="password" placeholder="Password" [(ngModel)]="formData.password" name="password" required />
+        <button type="submit">Add</button>
+      </form>
+
+      <form *ngIf="modalType === 'delete'" (ngSubmit)="onDeleteUser()">
+        <h3>Delete User</h3>
+        <input type="text" placeholder="Username" [(ngModel)]="formData.username" name="username" required />
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+  </div>
+</div>

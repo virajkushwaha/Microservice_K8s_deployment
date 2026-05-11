@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: hotel
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+
+    scrape_configs:
+      - job_name: 'api-gateway'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['api-gateway:8080']
+
+      - job_name: 'auth-service'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['auth-service:8082']
+
+      - job_name: 'room-service'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['room-service:8084']
+
+      - job_name: 'roomprice-service'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['roomprice-service:8094']
+
+      - job_name: 'staff-service'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['staff-service:8087']
+
+      - job_name: 'reservation-service'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['reservation-service:8083']

@@ -1,0 +1,156 @@
+<!-- <div class="dashboard-container">
+  <h1>Owner Dashboard</h1>
+  <div class="button-grid">
+      <button class="login-button" routerLink="/owner-dashboard/create-user">Create Manager/Receptionist</button>
+      <button class="login-button" routerLink="/owner-dashboard/staff">Manage Staff</button>
+      <button class="login-button" routerLink="/owner-dashboard/rooms">Manage Rooms</button>
+      <button class="login-button" routerLink="/owner-dashboard/reservations">Manage Reservations</button>
+      <button class="login-button" routerLink="/owner-dashboard/payments">Manage Payments</button>
+     
+  </div>
+</div>
+<router-outlet></router-outlet> -->
+
+
+
+
+<div class="dashboard-wrapper">
+  <!-- Enhanced Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <i class="fas fa-hotel"></i>
+        <span>Baratie</span>
+      </div>
+      <h3 class="dashboard-title">Owner Portal</h3>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <a routerLink="/owner-dashboard/create-user" class="nav-item" routerLinkActive="active">
+        <i class="fas fa-user-plus"></i>
+        <span>Create Users</span>
+      </a>
+      <a routerLink="/owner-dashboard/staff" class="nav-item" routerLinkActive="active">
+        <i class="fas fa-users"></i>
+        <span>Manage Staff</span>
+      </a>
+      <a routerLink="/owner-dashboard/rooms" class="nav-item" routerLinkActive="active">
+        <i class="fas fa-bed"></i>
+        <span>Manage Rooms</span>
+      </a>
+      <a routerLink="/owner-dashboard/reservations" class="nav-item" routerLinkActive="active">
+        <i class="fas fa-calendar-check"></i>
+        <span>Reservations</span>
+      </a>
+      <a routerLink="/owner-dashboard/payments" class="nav-item" routerLinkActive="active">
+        <i class="fas fa-credit-card"></i>
+        <span>Payments</span>
+      </a>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Enhanced Content Area -->
+  <div class="dashboard-content">
+    <div class="content-header">
+      <h1>Welcome Back, Owner</h1>
+      <p>Manage your hotel operations from this central dashboard</p>
+    </div>
+    
+    <!-- Hotel Overview -->
+    <div class="hotel-overview" *ngIf="!hasActiveRoute()">
+      <div class="overview-card">
+        <div class="card-icon">
+          <i class="fas fa-hotel"></i>
+        </div>
+        <div class="card-content">
+          <h3>Welcome to Baratie Management</h3>
+          <p>Your comprehensive hotel management dashboard. Monitor operations, manage bookings, and oversee staff from one central location.</p>
+        </div>
+      </div>
+      
+      <div class="overview-card">
+        <div class="card-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="card-content">
+          <h3>Business Insights</h3>
+          <p>Track your hotel's performance with real-time analytics. View occupancy rates, revenue trends, and guest satisfaction metrics.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Recent Activity -->
+    <div class="recent-activity" *ngIf="!hasActiveRoute()">
+      <h2>Recent Activity</h2>
+      <div class="activity-list">
+        <div class="activity-item">
+          <div class="activity-icon success">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+          <div class="activity-content">
+            <h4>New Reservation</h4>
+            <p>Room 101 booked for 3 nights</p>
+            <span class="activity-time">2 hours ago</span>
+          </div>
+        </div>
+        
+        <div class="activity-item">
+          <div class="activity-icon primary">
+            <i class="fas fa-user-plus"></i>
+          </div>
+          <div class="activity-content">
+            <h4>Staff Added</h4>
+            <p>New receptionist joined the team</p>
+            <span class="activity-time">5 hours ago</span>
+          </div>
+        </div>
+        
+        <div class="activity-item">
+          <div class="activity-icon warning">
+            <i class="fas fa-credit-card"></i>
+          </div>
+          <div class="activity-content">
+            <h4>Payment Received</h4>
+            <p>₹15,000 payment processed</p>
+            <span class="activity-time">1 day ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions" *ngIf="!hasActiveRoute()">
+      <h2>Quick Actions</h2>
+      <div class="actions-grid">
+        <div class="action-card" routerLink="/owner-dashboard/create-user">
+          <i class="fas fa-user-plus"></i>
+          <h3>Add New User</h3>
+          <p>Create manager or receptionist accounts</p>
+        </div>
+        
+        <div class="action-card" routerLink="/owner-dashboard/rooms">
+          <i class="fas fa-plus-circle"></i>
+          <h3>Add Room</h3>
+          <p>Register new rooms in the system</p>
+        </div>
+        
+        <div class="action-card" routerLink="/owner-dashboard/reservations">
+          <i class="fas fa-chart-line"></i>
+          <h3>View Reports</h3>
+          <p>Check booking and revenue reports</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="route-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

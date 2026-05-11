@@ -1,0 +1,63 @@
+<!-- <div class="login-container">
+    <h2>Login</h2>
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+      <input type="text" placeholder="Username" [(ngModel)]="username" name="username" required />
+      <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
+      <button type="submit">Login</button>
+    </form>
+    <p>
+      Don't have an account?
+      <a routerLink="/register">Register here</a>
+    </p>
+  </div>
+   -->
+
+
+
+
+
+   <div class="login-page">
+    <div class="background-image"></div>
+    <div class="overlay">
+      <div class="login-container">
+        <h1 class="brand-name">Baratie</h1>
+        <p class="welcome-message">Welcome back! Please login to continue.</p>
+  
+        <div class="form-box">
+          <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              [(ngModel)]="username"
+              name="username"
+              placeholder="Enter your username"
+              required
+            />
+  
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="Enter your password"
+              required
+            />
+  
+            <button type="submit">Login</button>
+  
+            <!-- <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p> -->
+          </form>
+  
+          <div class="signup-link">
+            <p>
+              Don't have an account?
+              <a routerLink="/register">Register here</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

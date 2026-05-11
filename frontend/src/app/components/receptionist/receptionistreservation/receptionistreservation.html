@@ -1,0 +1,113 @@
+<div class="page-header">
+  <h2>Reservation Management</h2>
+  <p>Create, view, and manage hotel reservations</p>
+</div>
+
+<div class="page-content">
+  <div class="button-group">
+    <button class="btn-create" (click)="openModal('create')">
+      <i class="fas fa-plus"></i>
+      Create Reservation
+    </button>
+    <button class="btn-view" (click)="getAllReservations()">
+      <i class="fas fa-list"></i>
+      View All Reservations
+    </button>
+    <button class="btn-search" (click)="openModal('search')">
+      <i class="fas fa-search"></i>
+      Search Reservation
+    </button>
+    <button class="btn-cancel" (click)="openModal('cancel')">
+      <i class="fas fa-times-circle"></i>
+      Cancel Reservation
+    </button>
+    <button class="btn-checkout" (click)="openModal('checkout')">
+      <i class="fas fa-sign-out-alt"></i>
+      Checkout
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+
+      <!-- Create Reservation -->
+      <form *ngIf="modalType === 'create'" (ngSubmit)="onCreateReservation()">
+        <h3>Create Reservation</h3>
+        <input type="text" placeholder="Guest Name" [(ngModel)]="reservationForm.guestName" name="guestName" required />
+        <input type="text" placeholder="Phone Number" [(ngModel)]="reservationForm.phoneNumber" name="phoneNumber" required />
+        <input type="email" placeholder="Email ID" [(ngModel)]="reservationForm.emailId" name="emailId" required />
+        <input type="text" placeholder="Room Type" [(ngModel)]="reservationForm.roomType" name="roomType" required />
+        <input type="date" [(ngModel)]="reservationForm.checkIn" name="checkIn" required />
+        <input type="date" [(ngModel)]="reservationForm.checkOut" name="checkOut" required />
+        <input type="number" placeholder="Children" [(ngModel)]="reservationForm.numChildren" name="numChildren" required />
+        <input type="number" placeholder="Adults" [(ngModel)]="reservationForm.numAdults" name="numAdults" required />
+        <input type="number" placeholder="Total Amount (₹)" [(ngModel)]="reservationForm.totalAmount" name="totalAmount" required />
+        <button type="submit">Create & Pay</button>
+      </form>
+
+      <!-- Search Reservation -->
+      <form *ngIf="modalType === 'search'" (ngSubmit)="onSearchReservation()">
+        <h3>Search Reservation</h3>
+        <input type="text" placeholder="Guest Name" [(ngModel)]="searchForm.guestName" name="guestName" required />
+        <input type="text" placeholder="Phone Number" [(ngModel)]="searchForm.phoneNumber" name="phoneNumber" required />
+        <button type="submit">Search</button>
+      </form>
+
+      <!-- Cancel Reservation -->
+      <form *ngIf="modalType === 'cancel'" (ngSubmit)="onCancelReservation()">
+        <h3>Cancel Reservation</h3>
+        <input type="number" placeholder="Reservation ID" [(ngModel)]="reservationId" name="reservationId" required />
+        <button type="submit">Cancel</button>
+      </form>
+
+      <!-- Checkout Reservation -->
+      <form *ngIf="modalType === 'checkout'" (ngSubmit)="onCheckoutReservation()">
+        <h3>Checkout Reservation</h3>
+        <input type="text" placeholder="Reservation Code" [(ngModel)]="reservationCode" name="reservationCode" required />
+        <button type="submit">Checkout</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Reservation List -->
+  <div *ngIf="reservationList.length > 0" class="reservation-list">
+    <div class="list-header">
+      <h3><i class="fas fa-calendar-check"></i> All Reservations ({{ reservationList.length }})</h3>
+    </div>
+    <div class="list-content">
+      <ul>
+        <li *ngFor="let res of reservationList">
+          <strong>ID:</strong> {{ res.id }} |
+          <strong>Reservation Code: </strong> {{ res.reservationCode }} |
+          <strong>Guest:</strong> {{ res.guestName }} |
+          <strong>Room:</strong> {{ res.roomNumber }} |
+          <strong>Status:</strong> {{ res.status }} |
+          <strong>Nights:</strong> {{ res.nights }} |
+          <strong>Total:</strong> ₹{{ res.totalAmount }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Search Results -->
+  <div *ngIf="searchResults.length > 0" class="search-results">
+    <div class="list-header">
+      <h3><i class="fas fa-search"></i> Search Results ({{ searchResults.length }})</h3>
+    </div>
+    <div class="list-content">
+      <ul>
+        <li *ngFor="let res of searchResults">
+          <strong>ID:</strong> {{ res.id }} |
+          <strong>Reservation Code: </strong> {{ res.reservationCode }} |
+          <strong>Guest:</strong> {{ res.guestName }} |
+          <strong>Room:</strong> {{ res.roomNumber }} |
+          <strong>Status:</strong> {{ res.status }} |
+          <strong>Nights:</strong> {{ res.nights }} |
+          <strong>Total:</strong> ₹{{ res.totalAmount }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

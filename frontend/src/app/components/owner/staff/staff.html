@@ -1,0 +1,130 @@
+<div class="page-header">
+  <h2>Staff Management</h2>
+  <p>Add, view, and manage hotel staff members</p>
+</div>
+
+<div class="page-content">
+  <div class="button-group">
+    <button class="btn-add" (click)="openModal('add')">
+      <i class="fas fa-user-plus"></i>
+      Add Staff
+    </button>
+    <button class="btn-view" (click)="getAllStaff()">
+      <i class="fas fa-list"></i>
+      View All Staff
+    </button>
+    <button class="btn-search" (click)="openModal('getById')">
+      <i class="fas fa-search"></i>
+      Find Staff
+    </button>
+    <button class="btn-delete" (click)="openModal('delete')">
+      <i class="fas fa-user-minus"></i>
+      Delete Staff
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+
+      <!-- Add Staff Form -->
+      <form *ngIf="modalType === 'add'" (ngSubmit)="onAddStaff()">
+        <h3>Add Staff</h3>
+        <input type="text" placeholder="Name" [(ngModel)]="staffForm.name" name="name" required />
+        <input type="text" placeholder="Address" [(ngModel)]="staffForm.address" name="address" required />
+        <input type="number" placeholder="Salary" [(ngModel)]="staffForm.salary" name="salary" required />
+        <input type="number" placeholder="Age" [(ngModel)]="staffForm.age" name="age" required />
+        <input type="text" placeholder="Occupation" [(ngModel)]="staffForm.occupation" name="occupation" required />
+        <input type="email" placeholder="Email" [(ngModel)]="staffForm.email" name="email" required />
+        <button type="submit">Add</button>
+      </form>
+
+      <!-- Get by ID -->
+      <form *ngIf="modalType === 'getById'" (ngSubmit)="onGetById()">
+        <h3>Get Staff by ID</h3>
+        <input type="number" placeholder="Staff ID" [(ngModel)]="staffId" name="staffId" required />
+        <button type="submit">Fetch</button>
+      </form>
+
+      <!-- Delete by ID -->
+      <form *ngIf="modalType === 'delete'" (ngSubmit)="onDeleteStaff()">
+        <h3>Delete Staff</h3>
+        <input type="number" placeholder="Staff ID" [(ngModel)]="staffId" name="staffId" required />
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Staff List -->
+  <div *ngIf="staffList.length > 0" class="staff-list">
+    <div class="list-header">
+      <h3><i class="fas fa-users"></i> All Staff ({{ staffList.length }})</h3>
+    </div>
+    <div class="list-content">
+      <div class="staff-grid">
+        <div *ngFor="let staff of staffList" class="staff-card">
+          <div class="card-header">
+            <span class="staff-id">#{{ staff.id }}</span>
+            <span class="occupation-badge">{{ staff.occupation }}</span>
+          </div>
+          <div class="card-body">
+            <div class="staff-info">
+              <h4><i class="fas fa-user"></i> {{ staff.name }}</h4>
+              <p class="staff-email">{{ staff.email }}</p>
+            </div>
+            <div class="staff-details">
+              <div class="detail-item">
+                <i class="fas fa-briefcase"></i>
+                <span>{{ staff.occupation }}</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-rupee-sign"></i>
+                <span>₹{{ staff.salary }}</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-birthday-cake"></i>
+                <span>{{ staff.age }} years</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Staff Details -->
+  <div *ngIf="staffDetails" class="staff-details">
+    <div class="details-header">
+      <h3><i class="fas fa-info-circle"></i> Staff Details</h3>
+    </div>
+    <div class="details-content">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <div class="label">Staff ID</div>
+          <div class="value">#{{ staffDetails.id }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="label">Name</div>
+          <div class="value">{{ staffDetails.name }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="label">Email</div>
+          <div class="value">{{ staffDetails.email }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="label">Occupation</div>
+          <div class="value">{{ staffDetails.occupation }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="label">Salary</div>
+          <div class="value">₹{{ staffDetails.salary }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="label">Age</div>
+          <div class="value">{{ staffDetails.age }} years</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

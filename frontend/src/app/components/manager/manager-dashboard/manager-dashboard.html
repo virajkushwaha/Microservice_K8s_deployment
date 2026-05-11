@@ -1,0 +1,157 @@
+<!-- <div class="dashboard-container">
+    <h1>Manager Dashboard</h1>
+  
+    <div class="button-grid">
+      <button (click)="navigateTo('create-user')">Create User</button>
+      <button (click)="navigateTo('staff')">Manage Staff</button>
+      <button (click)="navigateTo('rooms')">Manage Rooms</button>
+      <button (click)="navigateTo('reservations')">Manage Reservations</button>
+      <button (click)="navigateTo('payments')">Manage Payments</button>
+    </div>
+  </div>
+  
+  <router-outlet></router-outlet> -->
+
+
+
+<div class="dashboard-wrapper">
+  <!-- Enhanced Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <i class="fas fa-hotel"></i>
+        <span>Baratie</span>
+      </div>
+      <h3 class="dashboard-title">Manager Portal</h3>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <a routerLink="/manager-dashboard/create-user" class="nav-item" routerLinkActive="active">
+        <i class="fas fa-user-plus"></i>
+        <span>Create User</span>
+      </a>
+      <a routerLink="/manager-dashboard/staff" class="nav-item" routerLinkActive="active">
+        <i class="fas fa-users"></i>
+        <span>Manage Staff</span>
+      </a>
+      <a routerLink="/manager-dashboard/rooms" class="nav-item" routerLinkActive="active">
+        <i class="fas fa-bed"></i>
+        <span>Manage Rooms</span>
+      </a>
+      <a routerLink="/manager-dashboard/reservations" class="nav-item" routerLinkActive="active">
+        <i class="fas fa-calendar-check"></i>
+        <span>Reservations</span>
+      </a>
+      <a routerLink="/manager-dashboard/payments" class="nav-item" routerLinkActive="active">
+        <i class="fas fa-credit-card"></i>
+        <span>Payments</span>
+      </a>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Enhanced Content Area -->
+  <div class="dashboard-content">
+    <div class="content-header">
+      <h1>Manager Dashboard</h1>
+      <p>Oversee daily operations and manage hotel resources</p>
+    </div>
+    
+    <!-- Hotel Overview -->
+    <div class="hotel-overview" *ngIf="!hasActiveRoute()">
+      <div class="overview-card">
+        <div class="card-icon">
+          <i class="fas fa-tasks"></i>
+        </div>
+        <div class="card-content">
+          <h3>Daily Operations Management</h3>
+          <p>Oversee daily hotel operations, manage staff schedules, and ensure smooth guest services from your management dashboard.</p>
+        </div>
+      </div>
+      
+      <div class="overview-card">
+        <div class="card-icon">
+          <i class="fas fa-users-cog"></i>
+        </div>
+        <div class="card-content">
+          <h3>Staff & Resource Coordination</h3>
+          <p>Coordinate with reception staff, manage room assignments, and handle guest requests efficiently to maintain service quality.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Recent Activity -->
+    <div class="recent-activity" *ngIf="!hasActiveRoute()">
+      <h2>Recent Activity</h2>
+      <div class="activity-list">
+        <div class="activity-item">
+          <div class="activity-icon primary">
+            <i class="fas fa-key"></i>
+          </div>
+          <div class="activity-content">
+            <h4>Room Assignment</h4>
+            <p>Room 205 assigned to guest check-in</p>
+            <span class="activity-time">1 hour ago</span>
+          </div>
+        </div>
+        
+        <div class="activity-item">
+          <div class="activity-icon success">
+            <i class="fas fa-clipboard-check"></i>
+          </div>
+          <div class="activity-content">
+            <h4>Staff Schedule Updated</h4>
+            <p>Evening shift assignments completed</p>
+            <span class="activity-time">3 hours ago</span>
+          </div>
+        </div>
+        
+        <div class="activity-item">
+          <div class="activity-icon warning">
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <div class="activity-content">
+            <h4>Maintenance Request</h4>
+            <p>Room 301 AC repair scheduled</p>
+            <span class="activity-time">4 hours ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions" *ngIf="!hasActiveRoute()">
+      <h2>Quick Actions</h2>
+      <div class="actions-grid">
+        <div class="action-card" routerLink="/manager-dashboard/create-user">
+          <i class="fas fa-user-plus"></i>
+          <h3>Add Staff Member</h3>
+          <p>Create new staff accounts</p>
+        </div>
+        
+        <div class="action-card" routerLink="/manager-dashboard/reservations">
+          <i class="fas fa-calendar-plus"></i>
+          <h3>New Booking</h3>
+          <p>Create a new reservation</p>
+        </div>
+        
+        <div class="action-card" routerLink="/manager-dashboard/rooms">
+          <i class="fas fa-tools"></i>
+          <h3>Room Status</h3>
+          <p>Update room availability</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="route-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+  

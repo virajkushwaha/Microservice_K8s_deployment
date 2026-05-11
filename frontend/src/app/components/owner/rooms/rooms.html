@@ -1,0 +1,185 @@
+<div class="page-header">
+  <h2>Room Management</h2>
+  <p>Add, view, and manage hotel rooms</p>
+</div>
+
+<div class="page-content">
+      <div class="button-group">
+        <button class="btn-add" (click)="openModal('add')">
+          <i class="fas fa-plus"></i>
+          Add Room
+        </button>
+        <button class="btn-view" (click)="getAllRooms()">
+          <i class="fas fa-list"></i>
+          View All Rooms
+        </button>
+        <button class="btn-search" (click)="openModal('getByRoomNumber')">
+          <i class="fas fa-search"></i>
+          Find Room
+        </button>
+        <button class="btn-delete" (click)="openModal('delete')">
+          <i class="fas fa-trash"></i>
+          Delete Room
+        </button>
+      </div>
+  
+      <!-- Enhanced Modal -->
+      <div class="modal" *ngIf="showModal">
+        <div class="modal-content">
+          <!-- Add Room Modal -->
+          <div *ngIf="modalType === 'add'">
+            <div class="modal-header">
+              <h3>Add New Room</h3>
+              <button class="close" (click)="closeModal()">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <form (ngSubmit)="onAddRoom()">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label>Room Number</label>
+                  <input type="text" placeholder="e.g. A101" [(ngModel)]="roomForm.roomNumber" name="roomNumber" required />
+                </div>
+                <div class="form-group">
+                  <label>Room Type</label>
+                  <select [(ngModel)]="roomForm.roomType" name="roomType" required>
+                    <option value="">Select room type</option>
+                    <option *ngFor="let type of roomTypes" [value]="type">{{ type }}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Rate Per Night (₹)</label>
+                  <input type="number" placeholder="0" [(ngModel)]="roomForm.ratePerNight" name="ratePerNight" required />
+                </div>
+                <div class="form-group">
+                  <label>Status</label>
+                  <select [(ngModel)]="roomForm.status" name="status">
+                    <option *ngFor="let status of roomStatuses" [value]="status">{{ status }}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Capacity</label>
+                  <input type="number" placeholder="Number of guests" [(ngModel)]="roomForm.capacity" name="capacity" required />
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+                <button type="submit">Add Room</button>
+              </div>
+            </form>
+          </div>
+    
+          <!-- Find Room Modal -->
+          <div *ngIf="modalType === 'getByRoomNumber'">
+            <div class="modal-header">
+              <h3>Find Room</h3>
+              <button class="close" (click)="closeModal()">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <form (ngSubmit)="onGetRoomByNumber()">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label>Room Number</label>
+                  <input type="text" placeholder="Enter room number" [(ngModel)]="roomNumber" name="roomNumber" required />
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+                <button type="submit">Search</button>
+              </div>
+            </form>
+          </div>
+    
+          <!-- Delete Room Modal -->
+          <div *ngIf="modalType === 'delete'">
+            <div class="modal-header">
+              <h3>Delete Room</h3>
+              <button class="close" (click)="closeModal()">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <form (ngSubmit)="onDeleteRoom()">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label>Room ID</label>
+                  <input type="text" placeholder="Enter room ID" [(ngModel)]="roomId" name="roomId" required />
+                </div>
+                <p style="color: #e74c3c; font-size: 14px; margin-top: 16px;">
+                  <i class="fas fa-exclamation-triangle"></i>
+                  Warning: This action cannot be undone.
+                </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+                <button type="submit" style="background: var(--danger-gradient);">Delete</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Enhanced Room List -->
+      <div *ngIf="roomList.length > 0" class="room-list">
+        <div class="list-header">
+          <h3><i class="fas fa-bed"></i> All Rooms ({{ roomList.length }})</h3>
+        </div>
+        <div class="list-content">
+          <ul>
+            <li *ngFor="let room of roomList">
+              <div class="room-info">
+                <div class="room-icon">
+                  <i class="fas fa-door-open"></i>
+                </div>
+                <div class="room-details">
+                  <div class="room-number">{{ room.roomNumber }}</div>
+                  <div class="room-type">{{ room.roomType }} • {{ room.capacity }} guests</div>
+                </div>
+              </div>
+              <div class="room-status">
+                <span class="status-badge" [class]="getStatusClass(room.status)">{{ room.status }}</span>
+                <span class="room-rate">₹{{ room.ratePerNight }}/night</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    
+      <!-- Enhanced Room Details -->
+      <div *ngIf="roomDetails" class="room-details">
+        <div class="details-header">
+          <h3><i class="fas fa-info-circle"></i> Room Details</h3>
+        </div>
+        <div class="details-content">
+          <div class="detail-grid">
+            <div class="detail-item">
+              <div class="label">Room Number</div>
+              <div class="value">{{ roomDetails.roomNumber }}</div>
+            </div>
+            <div class="detail-item">
+              <div class="label">Room Type</div>
+              <div class="value">{{ roomDetails.roomType }}</div>
+            </div>
+            <div class="detail-item">
+              <div class="label">Status</div>
+              <div class="value">
+                <span class="status-badge" [class]="getStatusClass(roomDetails.status)">{{ roomDetails.status }}</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="label">Rate Per Night</div>
+              <div class="value">₹{{ roomDetails.ratePerNight }}</div>
+            </div>
+            <div class="detail-item">
+              <div class="label">Capacity</div>
+              <div class="value">{{ roomDetails.capacity }} guests</div>
+            </div>
+            <div class="detail-item">
+              <div class="label">Room ID</div>
+              <div class="value">#{{ roomDetails.id }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+  

@@ -1,0 +1,86 @@
+<div class="page-header">
+  <h2>Staff Management</h2>
+  <p>Add, view, and manage hotel staff members</p>
+</div>
+
+<div class="page-content">
+  <div class="button-group">
+    <button class="btn-add" (click)="openModal('add')">
+      <i class="fas fa-user-plus"></i>
+      Add Staff
+    </button>
+    <button class="btn-view" (click)="getAllStaff()">
+      <i class="fas fa-list"></i>
+      View All Staff
+    </button>
+    <button class="btn-search" (click)="openModal('getById')">
+      <i class="fas fa-search"></i>
+      Find Staff
+    </button>
+    <button class="btn-delete" (click)="openModal('delete')">
+      <i class="fas fa-user-minus"></i>
+      Delete Staff
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+
+      <!-- Add Staff Form -->
+      <form *ngIf="modalType === 'add'" (ngSubmit)="onAddStaff()">
+        <h3>Add Staff</h3>
+        <input type="text" placeholder="Name" [(ngModel)]="staffForm.name" name="name" required />
+        <input type="text" placeholder="Address" [(ngModel)]="staffForm.address" name="address" required />
+        <input type="number" placeholder="Salary" [(ngModel)]="staffForm.salary" name="salary" required />
+        <input type="number" placeholder="Age" [(ngModel)]="staffForm.age" name="age" required />
+        <input type="text" placeholder="Occupation" [(ngModel)]="staffForm.occupation" name="occupation" required />
+        <input type="email" placeholder="Email" [(ngModel)]="staffForm.email" name="email" required />
+        <button type="submit">Add</button>
+      </form>
+
+      <!-- Get by ID -->
+      <form *ngIf="modalType === 'getById'" (ngSubmit)="onGetById()">
+        <h3>Get Staff by ID</h3>
+        <input type="number" placeholder="Staff ID" [(ngModel)]="staffId" name="staffId" required />
+        <button type="submit">Fetch</button>
+      </form>
+
+      <!-- Delete by ID -->
+      <form *ngIf="modalType === 'delete'" (ngSubmit)="onDeleteStaff()">
+        <h3>Delete Staff</h3>
+        <input type="number" placeholder="Staff ID" [(ngModel)]="staffId" name="staffId" required />
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Staff List -->
+  <div *ngIf="staffList.length > 0" class="staff-list">
+    <div class="list-header">
+      <h3><i class="fas fa-users"></i> All Staff ({{ staffList.length }})</h3>
+    </div>
+    <div class="list-content">
+      <ul>
+        <li *ngFor="let staff of staffList">
+          {{ staff.id }} - {{ staff.name }} ({{ staff.occupation }}) - ₹{{ staff.salary }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Staff Details -->
+  <div *ngIf="staffDetails" class="staff-details">
+    <div class="details-header">
+      <h3><i class="fas fa-info-circle"></i> Staff Details</h3>
+    </div>
+    <div class="details-content">
+      <p><strong>ID:</strong> {{ staffDetails.id }}</p>
+      <p><strong>Name:</strong> {{ staffDetails.name }}</p>
+      <p><strong>Email:</strong> {{ staffDetails.email }}</p>
+      <p><strong>Occupation:</strong> {{ staffDetails.occupation }}</p>
+      <p><strong>Salary:</strong> ₹{{ staffDetails.salary }}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: staff-service-config
+  namespace: hotel
+data:
+  SPRING_APPLICATION_NAME: staff-service
+  SERVER_PORT: "8087"
+  SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/staff_db
+  SPRING_JPA_HIBERNATE_DDL_AUTO: update
+  SPRING_JPA_SHOW_SQL: "true"
+  EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+  EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka
+  LOGGING_LEVEL_ROOT: INFO
+  LOGGING_LEVEL_COM_EXAMPLE_STAFF_SERVICE: DEBUG
+  MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: health,info,prometheus,metrics
+  MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED: "true"
+  MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED: "true"

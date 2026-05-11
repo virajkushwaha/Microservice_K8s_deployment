@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: roomprice-service
+  namespace: hotel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: roomprice-service
+  template:
+    metadata:
+      labels:
+        app: roomprice-service
+    spec:
+      nodeSelector:
+        role: worker
+      initContainers:
+        - name: wait-for-mysql
+          image: busybox
+          command: ["sh", "-c", "until nc -z mysql 3306; do echo waiting for mysql; sleep 3; done"]
+        - name: wait-for-eureka
+          image: busybox
+          command: ["sh", "-c", "until nc -z service-registry 8761; do echo waiting for eureka; sleep 3; done"]
+      containers:
+        - name: roomprice-service
+          image: vivekkpaathak/microservice_project_new-roomprice-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8094
+          envFrom:
+            - configMapRef:
+                name: roomprice-service-config
+          env:
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: mysql-username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: mysql-password

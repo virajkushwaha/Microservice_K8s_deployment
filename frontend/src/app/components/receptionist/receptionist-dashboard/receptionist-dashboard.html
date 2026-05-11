@@ -1,0 +1,148 @@
+<!-- <div class="dashboard-container">
+    <h1>Receptionist Dashboard</h1>
+  
+    <div class="button-grid">
+      <button (click)="navigateTo('rooms')">Manage Rooms</button>
+      <button (click)="navigateTo('reservations')">Manage Reservations</button>
+      <button (click)="navigateTo('payments')">Manage Payments</button>
+    </div>
+  </div>
+  
+  <router-outlet></router-outlet> -->
+
+
+
+
+<div class="dashboard-wrapper">
+  <!-- Enhanced Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <i class="fas fa-hotel"></i>
+        <span>Baratie</span>
+      </div>
+      <h3 class="dashboard-title">Reception Desk</h3>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <a routerLink="/receptionist-dashboard/rooms" class="nav-item" routerLinkActive="active">
+        <i class="fas fa-bed"></i>
+        <span>Room Status</span>
+      </a>
+      <a routerLink="/receptionist-dashboard/reservations" class="nav-item" routerLinkActive="active">
+        <i class="fas fa-calendar-check"></i>
+        <span>Reservations</span>
+      </a>
+      <a routerLink="/receptionist-dashboard/payments" class="nav-item" routerLinkActive="active">
+        <i class="fas fa-credit-card"></i>
+        <span>Payments</span>
+      </a>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Enhanced Content Area -->
+  <div class="dashboard-content">
+    <div class="content-header">
+      <h1>Reception Dashboard</h1>
+      <p>Handle guest services and front desk operations</p>
+    </div>
+    
+    <!-- Hotel Overview -->
+    <div class="hotel-overview" *ngIf="!hasActiveRoute()">
+      <div class="overview-card">
+        <div class="card-icon">
+          <i class="fas fa-concierge-bell"></i>
+        </div>
+        <div class="card-content">
+          <h3>Guest Services & Front Desk</h3>
+          <p>Handle guest check-ins, check-outs, and provide exceptional customer service. Manage room assignments and guest requests efficiently.</p>
+        </div>
+      </div>
+      
+      <div class="overview-card">
+        <div class="card-icon">
+          <i class="fas fa-clipboard-list"></i>
+        </div>
+        <div class="card-content">
+          <h3>Reservation & Payment Processing</h3>
+          <p>Process reservations, handle payments, and maintain accurate guest records. Ensure smooth operations at the reception desk.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Recent Activity -->
+    <div class="recent-activity" *ngIf="!hasActiveRoute()">
+      <h2>Recent Activity</h2>
+      <div class="activity-list">
+        <div class="activity-item">
+          <div class="activity-icon success">
+            <i class="fas fa-door-open"></i>
+          </div>
+          <div class="activity-content">
+            <h4>Guest Check-in</h4>
+            <p>Mr. Sharma checked into Room 102</p>
+            <span class="activity-time">30 minutes ago</span>
+          </div>
+        </div>
+        
+        <div class="activity-item">
+          <div class="activity-icon primary">
+            <i class="fas fa-credit-card"></i>
+          </div>
+          <div class="activity-content">
+            <h4>Payment Processed</h4>
+            <p>₹8,500 payment received for Room 205</p>
+            <span class="activity-time">1 hour ago</span>
+          </div>
+        </div>
+        
+        <div class="activity-item">
+          <div class="activity-icon warning">
+            <i class="fas fa-door-closed"></i>
+          </div>
+          <div class="activity-content">
+            <h4>Guest Check-out</h4>
+            <p>Room 301 checkout completed</p>
+            <span class="activity-time">2 hours ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions" *ngIf="!hasActiveRoute()">
+      <h2>Quick Actions</h2>
+      <div class="actions-grid">
+        <div class="action-card" routerLink="/receptionist-dashboard/reservations">
+          <i class="fas fa-plus-circle"></i>
+          <h3>New Booking</h3>
+          <p>Create a walk-in reservation</p>
+        </div>
+        
+        <div class="action-card" routerLink="/receptionist-dashboard/rooms">
+          <i class="fas fa-key"></i>
+          <h3>Room Check-in</h3>
+          <p>Process guest check-in</p>
+        </div>
+        
+        <div class="action-card" routerLink="/receptionist-dashboard/payments">
+          <i class="fas fa-receipt"></i>
+          <h3>Process Payment</h3>
+          <p>Handle guest payments</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="route-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+  

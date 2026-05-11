@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-registry
+  namespace: hotel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-registry
+  template:
+    metadata:
+      labels:
+        app: service-registry
+    spec:
+      nodeSelector:
+        role: master
+      containers:
+        - name: service-registry
+          image: vivekkpaathak/microservice_project_new-service-registry:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8761
+          envFrom:
+            - configMapRef:
+                name: service-registry-config
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8761
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 10

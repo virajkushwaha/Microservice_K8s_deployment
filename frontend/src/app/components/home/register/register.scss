@@ -1,0 +1,123 @@
+.signup-page {
+  position: relative;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+
+  .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("/assets/1.webp") no-repeat center center;
+    background-size: cover;
+    filter: blur(2px);
+    z-index: 1;
+  }
+
+  .overlay {
+    position: relative;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .signup-container {
+    text-align: center;
+    color: #fff;
+    max-width: 400px;
+    width: 90%;
+    padding: 20px;
+
+    .brand-name {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #f8f9fa;
+    }
+
+    .welcome-message {
+      font-size: 1.3rem;
+      margin-bottom: 25px;
+      color: #e0e0e0;
+    }
+
+    .form-box {
+      background-color: rgba(255, 255, 255, 0.3); // glassy background
+      backdrop-filter: blur(6px);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      color: #333;
+      width: 100%;
+      max-width: 350px;
+      margin: auto;
+    
+      form {
+        display: flex;
+        flex-direction: column;
+    
+        label {
+          margin: 8px 0 4px;
+          font-weight: 600;
+        }
+    
+        input,
+        select {
+          padding: 10px;
+          border: 1px solid rgba(255, 255, 255, 0.4);
+          border-radius: 6px;
+          font-size: 0.95rem;
+          background-color: rgba(255, 255, 255, 0.2); // semi-transparent field
+          backdrop-filter: blur(4px);
+          color: #333;
+          transition: border-color 0.3s;
+    
+          &:focus {
+            border-color: #007bff;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.3);
+          }
+        }
+    
+        button {
+          margin-top: 16px;
+          padding: 10px;
+          background-color: rgba(0, 123, 255, 0.7); // semi-transparent blue
+          color: white;
+          border: none;
+          border-radius: 6px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          backdrop-filter: blur(4px);
+    
+          &:hover {
+            background-color: rgba(33, 136, 56, 0.8); // semi-transparent green
+          }
+        }
+      }
+    
+      .login-link {
+        margin-top: 16px;
+        font-size: 0.9rem;
+        text-align: center;
+    
+        a {
+          color: #007bff;
+          text-decoration: none;
+    
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}
